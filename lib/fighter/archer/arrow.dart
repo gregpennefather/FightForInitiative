@@ -1,20 +1,22 @@
 import 'dart:async';
 
+import 'package:fight_for_initiative/fighter/fighter.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 
 class ArrowProjectile extends PositionComponent {
-  late Vector2 target;
+  late Fighter target;
+  late Vector2 targetPosition;
   late MoveToEffect effect;
 
-  ArrowProjectile(Vector2 position, this.target) : super (position: position);
+  ArrowProjectile(Vector2 position, this.target, this.targetPosition) : super (position: position);
 
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
-    lookAt(target);
-    effect = MoveToEffect(target, LinearEffectController(0.75), onComplete: hit);
+    lookAt(targetPosition);
+    effect = MoveToEffect(targetPosition, LinearEffectController(0.75), onComplete: hit);
     add(effect);
   }
 
@@ -25,6 +27,7 @@ class ArrowProjectile extends PositionComponent {
   }
 
   hit() {
+    target.killed();
     removeFromParent();
   }
 }

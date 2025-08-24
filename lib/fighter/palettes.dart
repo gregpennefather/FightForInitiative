@@ -2,19 +2,27 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 
 class FighterPalette {
-  final PaletteEntry base;
-  final PaletteEntry accent;
+  final PaletteEntry body;
+  final PaletteEntry bodyOutline;
+  final PaletteEntry deadBody;
+  final PaletteEntry deadBodyOutline;
 
-  const FighterPalette(this.base, this.accent);
+  const FighterPalette(this.body, this.bodyOutline, this.deadBody, this.deadBodyOutline);
 }
 
 class FighterPalettes {
+  static const deadBody =  PaletteEntry(Color(0xFF9E9E9E));
+  static const deadBodyOutline =  PaletteEntry(Color(0xFF424242));
   static const FighterPalette purple = FighterPalette(
     PaletteEntry(Colors.deepPurple),
-    PaletteEntry(Colors.deepPurpleAccent),
+    PaletteEntry(Color(0xFF512DA8)),
+    deadBody,
+    deadBodyOutline
   );
   static const FighterPalette green = FighterPalette(
     PaletteEntry(Colors.green),
-    PaletteEntry(Colors.greenAccent),
+    PaletteEntry(Color(0xFF2E7D32)),
+    deadBody,
+    deadBodyOutline
   );
 }

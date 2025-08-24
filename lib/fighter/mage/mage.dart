@@ -1,14 +1,31 @@
 import 'package:fight_for_initiative/fighter/fighter.dart';
+import 'package:fight_for_initiative/fighter/idle.state.dart';
+import 'package:fight_for_initiative/fighter/mage/mage.dead.state.dart';
 import 'package:fight_for_initiative/fighter/mage/mote.dart';
+import 'package:fight_for_initiative/fighter/palettes.dart';
+import 'package:flame/components.dart';
 
 class MageFighter extends Fighter {
-  MageFighter(super.position, super.paint, super.radius, super.key);
-
+  MageFighter(
+    Vector2 position,
+    double radius,
+    ComponentKey? key,
+  ) : super(
+        position,
+        radius,
+        IdleState(FighterPalettes.purple),
+        MageDeadState(),
+        key,
+      );
   @override
   Future<void> onLoad() async {
     super.onLoad();
     add(MageMote(0));
     add(MageMote(1));
     add(MageMote(2));
+  }
+
+  killMotes() {
+    print("KillMotes called");
   }
 }

@@ -1,10 +1,23 @@
 import 'package:fight_for_initiative/fighter/archer/arrow.dart';
+import 'package:fight_for_initiative/fighter/dead.state.dart';
 import 'package:fight_for_initiative/fighter/fighter.dart';
+import 'package:fight_for_initiative/fighter/idle.state.dart';
+import 'package:fight_for_initiative/fighter/palettes.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 
 class ArcherFighter extends Fighter with TapCallbacks {
-  ArcherFighter(super.position, super.paint, super.radius, super.key);
+  ArcherFighter(
+    Vector2 position,
+    double radius,
+    ComponentKey? key,
+  ) : super(
+        position,
+        radius,
+        IdleState(FighterPalettes.green),
+        DeadState(),
+        key,
+      );
 
   @override
   void onTapDown(TapDownEvent event) {
@@ -14,7 +27,7 @@ class ArcherFighter extends Fighter with TapCallbacks {
   }
 
   void beginAttack(ComponentKey target) {
-    var targetComponent = game.findByKey<PositionComponent>(target);
-    world.add(ArrowProjectile(position, targetComponent!.position));
+    var targetComponent = game.findByKey<Fighter>(target);
+    world.add(ArrowProjectile(position, targetComponent!, targetComponent.position));
   }
 }
