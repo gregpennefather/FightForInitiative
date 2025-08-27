@@ -1,6 +1,7 @@
-enum FighterFlag with BitFlags {
+enum FighterType with BitFlags {
   archer,
-  mage
+  mage,
+  warrior
 }
 
 mixin BitFlags on Enum {

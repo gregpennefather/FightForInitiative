@@ -14,7 +14,7 @@ class IdleState<T extends Fighter> extends State<T> {
 
   @override
   void onEnter(T owner, [State<T>? from]) {
-    owner.outlinePaint = outlinePaint;
+    owner.outlinePaint = outlinePaint..strokeWidth = 3..style=PaintingStyle.stroke;
     owner.paint = bodyPaint;
   }
 }

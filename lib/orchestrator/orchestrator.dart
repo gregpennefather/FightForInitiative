@@ -1,16 +1,23 @@
+import 'dart:math';
+
 import 'package:fight_for_initiative/fighter/archer/archer.dart';
 import 'package:fight_for_initiative/fighter/fighter.dart';
 import 'package:fight_for_initiative/fighter/mage/mage.dart';
-import 'package:fight_for_initiative/orchestrator/fighters.flag.dart';
+import 'package:fight_for_initiative/fighter/warrior/warrior.dart';
+import 'package:fight_for_initiative/orchestrator/fighter_type.dart';
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 
 class Orchestrator extends Component with HasWorldReference {
-  final double _radius = 45.0;
+  final double _radius = 30.0;
   late List<ComponentKey?> fighterKeys;
 
-  Orchestrator(): super(key: ComponentKey.named("Orchestrator")) {
-    fighterKeys = List<ComponentKey?>.filled(2, null);
+  Orchestrator() : super(key: ComponentKey.named("Orchestrator")) {
+    fighterKeys = List<ComponentKey?>.filled(3, null);
   }
+
+  int get unassignedFighters =>
+      fighterKeys.where((element) => element == null).length;
 
   void trySpawn(Vector2 position) {
     if (fighterKeys.any((cKey) => cKey == null)) {
@@ -25,25 +32,21 @@ class Orchestrator extends Component with HasWorldReference {
   }
 
   Fighter randomFighter(Vector2 position) {
-    if (fighterKeys[FighterFlag.archer.index] == null) {
-      fighterKeys[FighterFlag.archer.index] = ComponentKey.named(
-        "ArcherFighter",
-      );
+    var keys = fighterKeys.indexed.where((e) => e.$2 == null).toList();
+    var rnd = Random();
+    FighterType selectedKey =
+        FighterType.values[keys[keys.length > 1
+                ? rnd.nextIntBetween(0, keys.length - 1)
+                : 0]
+            .$1];
 
-      return ArcherFighter(
-        position,
-        _radius,
-        fighterKeys[FighterFlag.archer.index],
-      );
-    } else if (fighterKeys[FighterFlag.mage.index] == null) {
-      fighterKeys[FighterFlag.mage.index] = ComponentKey.named("MageFighter");
-      return MageFighter(
-        position,
-        _radius,
-        fighterKeys[FighterFlag.mage.index],
-      );
-    }
+    var newComponent = switch (selectedKey) {
+      FighterType.archer => ArcherFighter(position, _radius),
+      FighterType.mage => MageFighter(position, _radius),
+      FighterType.warrior => WarriorFighter(position, _radius),
+    };
 
-    throw AssertionError("No fighter type available");
+    fighterKeys[selectedKey.index] = newComponent.key;
+    return newComponent;
   }
 }

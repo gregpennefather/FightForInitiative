@@ -9,14 +9,13 @@ import 'package:flame/events.dart';
 class ArcherFighter extends Fighter with TapCallbacks {
   ArcherFighter(
     Vector2 position,
-    double radius,
-    ComponentKey? key,
+    double radius
   ) : super(
         position,
         radius,
-        IdleState(FighterPalettes.green),
+        IdleState(FighterPalettes.archer),
         DeadState(),
-        key,
+        ComponentKey.named("ArcherFighter"),
       );
 
   @override

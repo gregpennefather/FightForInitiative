@@ -6,17 +6,15 @@ import 'package:fight_for_initiative/fighter/palettes.dart';
 import 'package:flame/components.dart';
 
 class MageFighter extends Fighter {
-  MageFighter(
-    Vector2 position,
-    double radius,
-    ComponentKey? key,
-  ) : super(
+  MageFighter(Vector2 position, double radius)
+    : super(
         position,
         radius,
-        IdleState(FighterPalettes.purple),
+        IdleState(FighterPalettes.mage),
         MageDeadState(),
-        key,
+        ComponentKey.named("MageFighter"),
       );
+
   @override
   Future<void> onLoad() async {
     super.onLoad();

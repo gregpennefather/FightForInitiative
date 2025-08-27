@@ -19,9 +19,13 @@ class Field extends RectangleComponent
         priority: 0,
       );
 
+  int get spawnPointCount => children.query<SpawnPoint>().length;
+
+  bool get canSpawnNewPoint => spawnPointCount < world.orchestrator.unassignedFighters;
+
   @override
   void onLongTapDown(TapDownEvent event) {
-    if (existingSpawnPoint(event.localPosition) == null) {
+    if (canSpawnNewPoint && existingSpawnPoint(event.localPosition) == null) {
       add(SpawnPoint(event.localPosition));
     }
   }

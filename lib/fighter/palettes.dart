@@ -13,15 +13,21 @@ class FighterPalette {
 class FighterPalettes {
   static const deadBody =  PaletteEntry(Color(0xFF9E9E9E));
   static const deadBodyOutline =  PaletteEntry(Color(0xFF424242));
-  static const FighterPalette purple = FighterPalette(
+  static const FighterPalette mage = FighterPalette(
     PaletteEntry(Colors.deepPurple),
     PaletteEntry(Color(0xFF512DA8)),
     deadBody,
     deadBodyOutline
   );
-  static const FighterPalette green = FighterPalette(
+  static const FighterPalette archer = FighterPalette(
     PaletteEntry(Colors.green),
     PaletteEntry(Color(0xFF2E7D32)),
+    deadBody,
+    deadBodyOutline
+  );
+  static const FighterPalette warrior = FighterPalette(
+    PaletteEntry(Colors.brown),
+    PaletteEntry(Color(0xFF4E342E)),
     deadBody,
     deadBodyOutline
   );
