@@ -22,7 +22,6 @@ class FightForInitiativeGame extends FlameGame {
       world: world,
       width: 1280,
       height: 720,
-
     );
   }
 
@@ -35,14 +34,23 @@ class FFIWorld extends World with HasGameReference {
 
   Orchestrator get orchestrator => _orchestrator ??= _getOrchestrator();
 
+  Field? _field;
+
+  Field get field => _field ??= _getField();
+
   @override
   Future<void> onLoad() async {
     add(orchestrator);
-    add(Field(game.size));
+    add(field);
   }
 
   Orchestrator _getOrchestrator() {
     final orchestrator = Orchestrator();
     return orchestrator;
+  }
+
+  Field _getField() {
+    final field = Field(game.size);
+    return field;
   }
 }

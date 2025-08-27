@@ -6,7 +6,7 @@ import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 import 'package:fight_for_initiative/game.dart';
 
-const double SPAWN_TAP_DISTANCE_THRESHOLD = 100;
+const double spawnTapDistanceThreshold = 100;
 
 class Field extends RectangleComponent
     with TapCallbacks, HasWorldReference<FFIWorld> {
@@ -45,7 +45,7 @@ class Field extends RectangleComponent
 
   SpawnPoint? existingSpawnPoint(Vector2 position) {
     for (final child in children.query<SpawnPoint>()) {
-      if (child.position.distanceTo(position) < SPAWN_TAP_DISTANCE_THRESHOLD && !child.isRemoving) {
+      if (child.position.distanceTo(position) < spawnTapDistanceThreshold && !child.isRemoving) {
         return child;
       }
     }
