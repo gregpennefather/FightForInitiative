@@ -1,6 +1,5 @@
 import 'package:fight_for_initiative/fighter/fighter.dart';
 import 'package:fight_for_initiative/fighter/palettes.dart';
-import 'package:flame/palette.dart';
 import 'package:flame_state_machine/flame_state_machine.dart';
 import 'package:flutter/rendering.dart';
 

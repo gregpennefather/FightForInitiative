@@ -4,7 +4,7 @@ import 'package:flame/extensions.dart';
 import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
 
-class MageMote extends CircleComponent with HasWorldReference {
+class MageMote extends CircleComponent with HasGameReference, HasWorldReference {
   static const pathRadius = 60.0;
   static const pathAmplitude = 45.0;
 
@@ -92,12 +92,12 @@ class MageMote extends CircleComponent with HasWorldReference {
   void update(double dt) {
     super.update(dt);
     if (parentPositionProvider != null) {
-      world.add(
+      game.add(
         ParticleSystemComponent(
           particle: ScalingParticle(
             child: CircleParticle(paint: paint, radius: 5.0, lifespan: 0.5),
           ),
-          position: absolutePosition,
+          position: (game.canvasSize/2) + absoluteCenter,
           priority: 5,
         ),
       );

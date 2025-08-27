@@ -1,12 +1,10 @@
 import 'dart:ui';
 
+import 'package:fight_for_initiative/orchestrator/orchestrator.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
-import 'package:fight_for_initiative/fighter/archer/archer.dart';
-import 'package:fight_for_initiative/fighter/mage/mage.dart';
-import 'package:fight_for_initiative/fighter/palettes.dart';
 
 import 'field/field.dart';
 
@@ -22,8 +20,9 @@ class FightForInitiativeGame extends FlameGame {
     super.world = world;
     super.camera = CameraComponent.withFixedResolution(
       world: world,
-      width: 800,
-      height: 600,
+      width: 1280,
+      height: 720,
+
     );
   }
 
@@ -32,18 +31,18 @@ class FightForInitiativeGame extends FlameGame {
 }
 
 class FFIWorld extends World with HasGameReference {
+  Orchestrator? _orchestrator;
+
+  Orchestrator get orchestrator => _orchestrator ??= _getOrchestrator();
+
   @override
   Future<void> onLoad() async {
+    add(orchestrator);
     add(Field(game.size));
-    add(
-      MageFighter(Vector2(-200, 00), 35.0, ComponentKey.named("MageFighter")),
-    );
-    add(
-      ArcherFighter(
-        Vector2(300, -50),
-        35.0,
-        ComponentKey.named("ArcherFighter"),
-      ),
-    );
+  }
+
+  Orchestrator _getOrchestrator() {
+    final orchestrator = Orchestrator();
+    return orchestrator;
   }
 }

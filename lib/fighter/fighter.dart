@@ -4,7 +4,6 @@ import 'package:fight_for_initiative/fighter/idle.state.dart';
 import 'package:flame/components.dart';
 import 'package:flame_state_machine/flame_state_machine.dart';
 import 'package:flutter/material.dart' hide State;
-import 'package:fight_for_initiative/fighter/palettes.dart';
 
 class Fighter extends CircleComponent
     with HasStates<Fighter>, HasWorldReference, HasGameReference {

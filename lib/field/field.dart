@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:fight_for_initiative/field/spawn_point.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 import 'package:fight_for_initiative/game.dart';
+
+const double SPAWN_TAP_DISTANCE_THRESHOLD = 100;
 
 class Field extends RectangleComponent
     with TapCallbacks, HasWorldReference<FFIWorld> {
@@ -18,12 +21,30 @@ class Field extends RectangleComponent
 
   @override
   void onLongTapDown(TapDownEvent event) {
-    // world.add(
-    //   MageFighter(
-    //     event.localPosition + position,
-    //     Paint()..color = Colors.deepPurple,
-    //     30.0
-    //   ),
-    // );
+    if (existingSpawnPoint(event.localPosition) == null) {
+      add(SpawnPoint(event.localPosition));
+    }
+  }
+
+  @override
+  void onTapUp(TapUpEvent event) {
+    super.onTapUp(event);
+    if (children.isNotEmpty) {
+      if (existingSpawnPoint(event.localPosition) case var spawnPoint?) {
+        if (spawnPoint.confirmed) {
+          world.orchestrator.trySpawn(position + spawnPoint.position);
+        }
+        remove(spawnPoint);
+      }
+    }
+  }
+
+  SpawnPoint? existingSpawnPoint(Vector2 position) {
+    for (final child in children.query<SpawnPoint>()) {
+      if (child.position.distanceTo(position) < SPAWN_TAP_DISTANCE_THRESHOLD && !child.isRemoving) {
+        return child;
+      }
+    }
+    return null;
   }
 }
